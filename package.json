@@ -19,10 +19,14 @@
   ],
   "type": "module",
   "scripts": {
-    "prepare": "vp config"
+    "prepare": "vp config && effect-tsgo patch --no-typescript --oxlint"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",
+    "@effect/platform-node": "4.0.5",
+    "@effect/tsgo": "0.53.1",
+    "@effect/vitest": "4.0.5",
+    "effect": "4.0.5",
     "vite-plus": "1.2.0"
   },
   "overrides": {

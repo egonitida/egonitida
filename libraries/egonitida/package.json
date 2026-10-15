@@ -1,0 +1,46 @@
+{
+  "name": "egonitida",
+  "version": "0.0.1",
+  "description": "EgoNitida is a real-time 3D engine built on Effect, Three.js, and Foldkit. The egonitida command is a convenient point of access to EgoNitida resources.",
+  "keywords": [
+    "3d",
+    "agentic",
+    "effect",
+    "egonitida",
+    "engine",
+    "foldkit",
+    "game-engine",
+    "real-time",
+    "three",
+    "webgpu"
+  ],
+  "homepage": "https://egonitida.com",
+  "bugs": {
+    "url": "https://github.com/egonitida/egonitida/issues"
+  },
+  "license": "MIT",
+  "author": "Filip Falcon",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egonitida/egonitida.git",
+    "directory": "libraries/egonitida"
+  },
+  "bin": {
+    "egonitida": "dist/Entrypoint.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "imports": {
+    "#package.json": "./package.json",
+    "#src/*": "./src/*"
+  },
+  "scripts": {
+    "prepack": "vp pack"
+  },
+  "engines": {
+    "node": "^24.11.0",
+    "npm": "^12.0.0"
+  }
+}

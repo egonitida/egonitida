@@ -1,3 +1,4 @@
+import { recommended } from '@effect/tsgo/oxlint-presets';
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -8,6 +9,7 @@ export default defineConfig({
     singleQuote: true,
   },
   lint: {
+    extends: [recommended],
     jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
     categories: { correctness: 'error', suspicious: 'error', perf: 'error' },
     rules: {
@@ -17,6 +19,12 @@ export default defineConfig({
       'typescript/no-non-null-assertion': 'error',
     },
     options: { typeAware: true, typeCheck: true },
+    overrides: [
+      {
+        files: ['**/*.test.ts'],
+        rules: { 'eslint/no-shadow': ['error', { allow: ['it'] }] },
+      },
+    ],
   },
   run: {
     cache: true,
