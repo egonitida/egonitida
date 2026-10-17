@@ -1,0 +1,4 @@
+version: STSv1
+mode: testing
+mx: *.mx.cloudflare.net
+max_age: 604800

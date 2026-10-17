@@ -15,6 +15,7 @@
   },
   "workspaces": [
     "applications/*",
+    "infrastructure/*",
     "libraries/*"
   ],
   "type": "module",
@@ -27,6 +28,7 @@
     "@effect/tsgo": "0.53.1",
     "@effect/vitest": "4.0.5",
     "@types/node": "24.19.2",
+    "alchemy": "2.0.0-beta.83",
     "effect": "4.0.5",
     "vite-plus": "1.2.0"
   },
@@ -41,7 +43,7 @@
     },
     "runtime": {
       "name": "node",
-      "version": "^24.11.0",
+      "version": "^24.11.1",
       "onFail": "download"
     }
   }

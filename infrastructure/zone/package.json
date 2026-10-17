@@ -1,0 +1,7 @@
+{
+  "name": "@egonitida/zone",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The egonitida.com zone and everything set on it.",
+  "type": "module"
+}

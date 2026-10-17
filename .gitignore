@@ -2,11 +2,17 @@
 .DS_Store
 Thumbs.db
 
+# Environment
+.env
+
 # Dependencies
 node_modules/
 
 # Rolldown
 dist/
+
+# Alchemy
+.alchemy/
 
 # Claude
 .claude/
