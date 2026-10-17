@@ -1,0 +1,17 @@
+{
+  "name": "@egonitida/design",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The design tokens of EgoNitida, compiled by StyleX.",
+  "type": "module",
+  "exports": {
+    "./color.stylex": "./src/color.stylex.ts",
+    "./font.stylex": "./src/font.stylex.ts",
+    "./layer.stylex": "./src/layer.stylex.ts",
+    "./motion.stylex": "./src/motion.stylex.ts",
+    "./scale.stylex": "./src/scale.stylex.ts"
+  },
+  "peerDependencies": {
+    "@stylexjs/stylex": "0.19.1"
+  }
+}
