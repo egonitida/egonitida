@@ -16,3 +16,6 @@ dist/
 
 # Claude
 .claude/
+
+# IDE
+.zed/
