@@ -17,14 +17,13 @@ export default defineConfig({
       'typescript/no-explicit-any': 'error',
       'typescript/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
       'typescript/no-non-null-assertion': 'error',
+      'eslint/no-fallthrough': 'error',
+      'eslint/no-unreachable': 'error',
+      'eslint/no-unused-labels': 'error',
+      'eslint/no-unused-vars': 'error',
+      'typescript/consistent-return': 'error',
     },
     options: { typeAware: true, typeCheck: true },
-    overrides: [
-      {
-        files: ['**/*.test.ts'],
-        rules: { 'eslint/no-shadow': ['error', { allow: ['it'] }] },
-      },
-    ],
   },
   run: {
     cache: true,

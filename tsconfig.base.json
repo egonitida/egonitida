@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": true, // Rule checked by Oxlint `eslint/no-unreachable` instead.
+    "allowUnusedLabels": true, // Rule checked by Oxlint `eslint/no-unused-labels` instead.
+    "erasableSyntaxOnly": true, // Rule checked by TypeScript, as Oxlint covers only part of it.
+    "exactOptionalPropertyTypes": true, // Rule checked by TypeScript, as Oxlint has no equivalent.
+    "noEmit": true, // JavaScript emitted by Rolldown instead.
+    "noFallthroughCasesInSwitch": false, // Rule checked by Oxlint `eslint/no-fallthrough` instead.
+    "noImplicitOverride": true, // Rule checked by TypeScript, as Oxlint has no equivalent.
+    "noImplicitReturns": false, // Rule checked by Oxlint `typescript/consistent-return` instead.
+    "noPropertyAccessFromIndexSignature": true, // Rule checked by TypeScript, as Oxlint has no equivalent.
+    "noUncheckedIndexedAccess": true, // Rule checked by TypeScript, as Oxlint has no equivalent.
+    "noUnusedLocals": false, // Rule checked by Oxlint `eslint/no-unused-vars` instead.
+    "noUnusedParameters": false, // Rule checked by Oxlint `eslint/no-unused-vars` instead.
+    "skipLibCheck": true, // Declarations checked by their authors instead.
+    "target": "esnext", // Syntax handled by Rolldown and Node.js instead.
+    "verbatimModuleSyntax": true // Rule checked by TypeScript, as Oxlint covers only part of it.
+  }
+}

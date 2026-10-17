@@ -34,7 +34,7 @@
   "type": "module",
   "imports": {
     "#package.json": "./package.json",
-    "#src/*": "./src/*"
+    "#src/*": "./src/*.ts"
   },
   "scripts": {
     "prepack": "vp pack"

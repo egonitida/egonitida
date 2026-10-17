@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { program } from '#src/Program.ts';
+import { program } from '#src/Program';
 import { NodeRuntime } from '@effect/platform-node';
 
 NodeRuntime.runMain(program);

@@ -2,7 +2,7 @@ import { describe, expect, it } from '@effect/vitest';
 import { Effect } from 'effect';
 import { TestConsole } from 'effect/testing';
 import manifest from '#package.json' with { type: 'json' };
-import { program } from '#src/Program.ts';
+import { program } from '#src/Program';
 
 /** Every channel `npx egonitida` must list, by its label. */
 const expected = [

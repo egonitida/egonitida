@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["es2025"], // Built-in API checked against Node.js 24.
+    "module": "preserve", // Imports resolved by Rolldown instead.
+    "types": ["node"] // Host API checked against Node.js 24.
+  },
+  "include": ["**/*.ts"]
+}
