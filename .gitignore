@@ -1,8 +1,12 @@
 # Operating System
 .DS_Store
+Thumbs.db
 
 # Dependencies
 node_modules/
 
 # Rolldown
 dist/
+
+# Claude
+.claude/
