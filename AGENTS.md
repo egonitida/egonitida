@@ -32,7 +32,7 @@ TypeScript 7 checks types and nothing else. Every other job has a tool of its ow
 - `target` stays `esnext` in the base. Syntax is lowered by Rolldown, which bundles everything that ships, browser and workerd alike, and Node.js rejects what it cannot parse. TypeScript does not police syntax.
 - `module` is `preserve` wherever a bundler or a loader resolves imports, which is every project today, and `nodenext` only where Node.js resolves them itself.
 - `allowImportingTsExtensions` and `.ts` import specifiers belong only to scripts that Node.js runs as-is. Everything bundled imports without an extension.
-- `devEngines.runtime` is the Node.js the repository is developed with, and only the tools set its floor. `engines.node` in each library is the Node.js its users need, and only the library's code sets it. Neither moves the other.
+- `devEngines.runtime` is the Node.js the repository is developed and tested with, and only the tools set its floor. `engines.node` in each library is never lower, as nothing below it is tested, and is raised further only by the library's own code. It is an open range, `>=`, so newer majors stay supported.
 - `@types/node` is pinned to the Node.js major in `engines.node`, so the published code is checked against the oldest runtime it supports. The comments that name the version move with it.
 - Options keep their TypeScript 7 defaults unless a reason is written beside them: `strict`, `types: []`, `moduleResolution` follow from what is set.
 

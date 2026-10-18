@@ -15,8 +15,7 @@ npx egonitida
 | Requirement      | Supported                |
 | ---------------- | ------------------------ |
 | Operating system | macOS, Linux, or Windows |
-| Node.js          | `^24.11.0`               |
-| npm              | `^12.0.0`                |
+| Node.js          | `>=24.11.1`              |
 
 ## Links
 
