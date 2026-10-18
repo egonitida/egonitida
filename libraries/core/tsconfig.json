@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["es2025"], // Built-in API checked against WebGPU-generation browsers, Node.js 24 and workerd.
+    "module": "preserve" // Imports resolved by Rolldown instead.
+  },
+  "include": ["**/*.ts"]
+}
