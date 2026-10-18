@@ -2,7 +2,7 @@
   "name": "@egonitida/design",
   "version": "0.0.0",
   "private": true,
-  "description": "The design tokens of EgoNitida, compiled by StyleX.",
+  "description": "Design tokens of EgoNitida, compiled by StyleX.",
   "type": "module",
   "exports": {
     "./color.stylex": "./src/color.stylex.ts",
