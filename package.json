@@ -20,7 +20,8 @@
   ],
   "type": "module",
   "scripts": {
-    "prepare": "vp config && effect-tsgo patch --no-typescript --oxlint"
+    "prepare": "vp config && effect-tsgo patch --no-typescript --oxlint",
+    "check": "vp check && npm run check -w @egonitida/theory"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",

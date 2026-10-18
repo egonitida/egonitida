@@ -1,0 +1,10 @@
+{
+  "name": "@egonitida/theory",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Theory of the EgoNitida engine, proved in Lean.",
+  "type": "module",
+  "scripts": {
+    "check": "lake build"
+  }
+}

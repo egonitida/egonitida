@@ -6,7 +6,7 @@ EgoNitida is a real-time 3D engine for web applications and games. This reposito
 
 The repository is managed by Vite+, a unified toolchain built on top of Vite, Rolldown, Vitest, tsdown, Oxlint, Oxfmt, and Vite Task. It wraps runtime management, package management, and frontend tooling in a single global CLI called `vp`. Vite+ is distinct from Vite, and it invokes Vite through `vp dev` and `vp build`. Run `vp help` to print a list of commands and `vp <command> --help` for information about a specific command.
 
-Docs are local at `node_modules/vite-plus/docs` or online at https://viteplus.dev/guide/. Run `vp check` and `vp test` before you finish a change.
+Docs are local at `node_modules/vite-plus/docs` or online at https://viteplus.dev/guide/. Run `npm run check` and `vp test` before you finish a change. `libraries/theory/` holds the engine's theory, proved in Lean, and `npm run check` builds it. Lean comes through elan (`brew install elan-init`), at the version `lean-toolchain` pins.
 
 ## Built-in Commands vs Scripts
 

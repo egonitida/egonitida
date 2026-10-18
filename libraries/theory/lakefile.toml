@@ -1,0 +1,7 @@
+name = "egonitida"
+defaultTargets = ["EgoNitida"]
+fixedToolchain = true
+
+[[lean_lib]]
+name = "EgoNitida"
+leanOptions = { warningAsError = true }
