@@ -15,10 +15,6 @@ describe('Entity', () => {
     expect('0').not.toSatisfy(Schema.is(Entity));
   });
 
-  it('is never a plain number', () => {
-    expectTypeOf<number>().not.toExtend<Entity>();
-  });
-
   it('is never negative', () => {
     expect(-1).not.toSatisfy(Schema.is(Entity));
   });
@@ -29,5 +25,9 @@ describe('Entity', () => {
 
   it('is never beyond the safe integers', () => {
     expect(Number.MAX_SAFE_INTEGER + 1).not.toSatisfy(Schema.is(Entity));
+  });
+
+  it('is never a plain number', () => {
+    expectTypeOf<number>().not.toExtend<Entity>();
   });
 });
