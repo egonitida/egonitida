@@ -25,6 +25,9 @@ export default defineConfig({
     },
     options: { typeAware: true, typeCheck: true },
   },
+  test: {
+    projects: ['libraries/*'],
+  },
   run: {
     cache: true,
   },

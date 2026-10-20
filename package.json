@@ -31,6 +31,7 @@
     "@types/node": "24.19.2",
     "alchemy": "2.0.0-beta.83",
     "effect": "4.0.5",
+    "typescript": "7.0.2",
     "vite-plus": "1.2.0"
   },
   "overrides": {
