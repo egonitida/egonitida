@@ -38,6 +38,20 @@ TypeScript 7 checks types and nothing else. Every other job has a tool of its ow
 
 **Comments.** Every compiler option that is set carries a one-line comment in one form, stating who takes the job or what the value is checked against, without explaining why: ``Rule checked by Oxlint `eslint/no-unreachable` instead.``, `Rule checked by TypeScript, as Oxlint has no equivalent.`, `Imports resolved by Rolldown instead.`, `Built-in API checked against Node.js 24.`
 
+## Documentation Comments
+
+Every declaration in the libraries and the examples carries a TSDoc comment, and the reference of `@egonitida/core` is read from them, so a comment is written for readers.
+
+**One rule decides what a comment says: what the symbol is, in one sentence, and nothing else.**
+
+- Never repeat the symbol's name, never say what it is not, and never explain why it is so: `/** An identity in a simulation. */` for `Entity`, not `/** An entity: a thing that is there, known by its id. */`.
+- Bring in another term only when it is what tells the symbol apart: `/** A kind of data that describes an entity. */` for `Component`, as "A kind of data in a simulation." fits the tick as well.
+- A type or a definition opens with "A" or "An", a field or a specific thing with "The": `/** The name that identifies it. */`.
+- A function says what it does with a verb that is not its own name: `/** Creates a component from its name and schema. */` for `make`.
+- A schema and its type of the same name pair up: `/** A schema of an identity in a simulation. */` beside `/** An identity in a simulation. */`.
+
+A line comment on a configured value takes the form the TypeScript configuration sets out: one line on who takes the job or what the value is checked against, such as `Type tests checked by TypeScript beside the tests Vitest runs.`
+
 ## Zone Configuration
 
 `infrastructure/zone` is an Alchemy stack that declares the whole state of the domain on Cloudflare: registration, DNS, DNSSEC, mail, certificates, TLS, protocols, visitors, content, cache and observability. A new domain needs nothing set in the dashboard beyond buying it.

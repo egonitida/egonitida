@@ -1,13 +1,13 @@
 import { Console } from 'effect';
 import manifest from '#package.json' with { type: 'json' };
 
-/** A place to find EgoNitida: what it is called, and where it is. */
+/** A place to find EgoNitida. */
 export interface Channel {
   readonly label: string;
   readonly url: string;
 }
 
-/** Where to find EgoNitida, in the order `npx egonitida` lists them. */
+/** The places to find EgoNitida, in the order `npx egonitida` lists them. */
 export const channels: ReadonlyArray<Channel> = [
   { label: 'Website', url: 'https://egonitida.com' },
   { label: 'Source', url: 'https://github.com/egonitida/egonitida' },
@@ -18,13 +18,13 @@ export const channels: ReadonlyArray<Channel> = [
   { label: 'Threads', url: 'https://threads.com/@egonitida' },
 ];
 
-/** `channels` as lines, indented, each label padded to the longest so their addresses line up. */
+/** Turns channels into indented lines, each label padded to the longest one. */
 const listed = (listing: ReadonlyArray<Channel>): ReadonlyArray<string> => {
   const width = Math.max(...listing.map(({ label }) => label.length));
   return listing.map(({ label, url }) => `  ${label.padEnd(width)}  ${url}`);
 };
 
-/** What `npx egonitida` prints: EgoNitida at the version published, what EgoNitida is, and where to find it, written to the console. */
+/** The program `npx egonitida` runs, printing EgoNitida at the version published, what EgoNitida is, and where to find it. */
 export const program = Console.log(
   [
     `EgoNitida ${manifest.version}`,
