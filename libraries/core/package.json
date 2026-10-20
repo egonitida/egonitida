@@ -26,6 +26,9 @@
     "dist"
   ],
   "type": "module",
+  "imports": {
+    "#src/*": "./src/*.ts"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",
@@ -37,6 +40,9 @@
   },
   "scripts": {
     "prepack": "vp pack"
+  },
+  "peerDependencies": {
+    "effect": "^4.0.0"
   },
   "engines": {
     "node": ">=24.11.1"

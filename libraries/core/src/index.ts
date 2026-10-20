@@ -1,1 +1,1 @@
-export const name = '@egonitida/core';
+export * as Entity from '#src/Entity';
