@@ -21,6 +21,6 @@ Tests run on Vitest through `vp test`, and every change passes them before it is
 - Tests are DAMP, not DRY: each one reads alone, without helpers to look up, even when that repeats code.
 - A predicate is checked with `toSatisfy`, the value in `expect` and the predicate in the matcher: `expect(-1).not.toSatisfy(Schema.is(Entity))`.
 - A decision about types is checked with `expectTypeOf`, `expectTypeOf<number>().not.toExtend<Entity>()`. Vitest's typecheck mode, switched on in every project's `vite.config.ts`, runs it through TypeScript, so a type test fails in `vp test` like any other.
-- A call that must not compile is written out under `// @ts-expect-error`, followed by a sentence saying why it fails. Once the call compiles, the comment has nothing left to expect, and the typecheck fails the test.
+- A call that must not compile is written out under `// @ts-expect-error`, followed by a sentence saying why it fails, inside a function that never runs, `expectTypeOf(() => …).toBeFunction()`, so it is only ever checked. Once the call compiles, the comment has nothing left to expect, and the typecheck fails the test.
 
 **Tests and the theory:** a law the Lean theory proves gets a property test in Vitest, on values generated from the schemas, so the TypeScript implementation is checked against the same law the model is proved to keep.
