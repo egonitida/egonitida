@@ -1,5 +1,5 @@
 import * as Alchemy from 'alchemy';
-import * as Cloudflare from 'alchemy/Cloudflare';
+import * as Cloudflare from '@alchemy.run/cloudflare';
 import * as Config from 'effect/Config';
 import * as Effect from 'effect/Effect';
 
@@ -125,6 +125,7 @@ export default Alchemy.Stack(
       });
 
       yield* Cloudflare.Worker('MtaStsPolicy', {
+        name: 'zone-mtastspolicy-production-b7aga2kfhucvrzar', // Worker name kept from the first deploy, adopted by Alchemy.
         assets: './mta-sts', // MTA-STS policy served as a static file, as RFC 8461 defines.
         domain: `mta-sts.${env.zoneDomain}`, // Policy host named as RFC 8461 requires.
         workersDev: false, // Policy served on the MTA-STS hostname alone, as RFC 8461 defines.
@@ -234,6 +235,7 @@ export default Alchemy.Stack(
       });
 
       yield* Cloudflare.Ruleset.Ruleset('Redirects', {
+        name: 'Zone-Redirects-production-uroupymzwdmtncqe', // Ruleset name kept from the first deploy, adopted by Alchemy.
         zone,
         phase: 'http_request_dynamic_redirect',
         rules: [
