@@ -216,6 +216,22 @@ structure Isomorphism (source : Machine SourceState Input Output)
   toHomomorphism_composition_inverse :
     Homomorphism.composition toHomomorphism inverse = Homomorphism.identity target
 
+namespace IsFinal
+
+/-- Any two final machines $M$ and $N$ have an isomorphism from $M$ to $N$, $M \cong N$. -/
+theorem nonempty_isomorphism {source : Machine SourceState Input Output}
+    {target : Machine TargetState Input Output} (sourceIsFinal : IsFinal source)
+    (targetIsFinal : IsFinal target) : Nonempty (Isomorphism source target) := by
+  obtain ⟨⟨toTarget⟩, _⟩ := targetIsFinal source
+  obtain ⟨⟨toSource⟩, _⟩ := sourceIsFinal target
+  exact ⟨{
+    toHomomorphism := toTarget
+    inverse := toSource
+    inverse_composition_toHomomorphism := @Subsingleton.elim _ (sourceIsFinal source).2 _ _
+    toHomomorphism_composition_inverse := @Subsingleton.elim _ (targetIsFinal target).2 _ _ }⟩
+
+end IsFinal
+
 end Machine
 
 end EgoNitida
