@@ -124,11 +124,25 @@ theorem toFunction_iteratedTransitionFunction (homomorphism : Homomorphism sourc
 
 end Homomorphism
 
-/-- A function that gives the output of the last transition of a machine from a state after a nonempty sequence of inputs. -/
+/-- A function that gives the output of the last transition of a machine from a state after a sequence of inputs followed by a last input. -/
 @[export_typescript]
 def behavior (machine : Machine State Input Output) (state : State) (inputs : List Input)
     (lastInput : Input) : Output :=
   (machine.structureMap (machine.iteratedTransitionFunction state inputs) lastInput).output
+
+namespace Homomorphism
+
+variable {source : Machine SourceState Input Output} {target : Machine TargetState Input Output}
+
+/-- Starting from the image under a homomorphism $h$ of a state $s$ gives the same output after a sequence $\sigma$ followed by a last input $i$ as starting from $s$, $\mathrm{beh}(h(s))(\sigma i) = \mathrm{beh}(s)(\sigma i)$. -/
+theorem behavior_toFunction (homomorphism : Homomorphism source target) (state : SourceState)
+    (inputs : List Input) (lastInput : Input) :
+    target.behavior (homomorphism.toFunction state) inputs lastInput =
+      source.behavior state inputs lastInput := by
+  unfold behavior
+  rw [← homomorphism.toFunction_iteratedTransitionFunction, homomorphism.commutes]
+
+end Homomorphism
 
 /-- A property of a machine into which every machine has exactly one homomorphism. -/
 def IsFinal (machine : Machine State Input Output) : Prop :=
