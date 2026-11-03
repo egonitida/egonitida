@@ -150,7 +150,7 @@ def IsFinal (machine : Machine State Input Output) : Prop :=
     Nonempty (Homomorphism arbitrary machine) ∧ Subsingleton (Homomorphism arbitrary machine)
 
 /-- The machine whose states are the behaviors, each a function from a sequence of inputs followed by a last input to an output. -/
-def final : Machine (List Input → Input → Output) Input Output where
+def final (Input Output : Type) : Machine (List Input → Input → Output) Input Output where
   structureMap currentState input :=
     { successorState := fun inputs lastInput => currentState (input :: inputs) lastInput,
       output := currentState [] input }
