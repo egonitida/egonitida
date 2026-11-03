@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/assets/Splash.png" alt="EgoNitida, a real-time 3D engine: a dark-haired woman in a laurel crown and red silk looks back over her shoulder at a torchlit Roman festival of roses beneath a full moon.">
+  <img src=".github/assets/Splash.jpg" alt="EgoNitida, a real-time 3D engine for WebGPU, embroidered in gold thread on dark brown linen.">
 </p>
 
 <p align="center">
