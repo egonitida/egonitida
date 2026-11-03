@@ -204,6 +204,18 @@ theorem isFinal_final : IsFinal (final Input Output) := by
   exact ⟨⟨Homomorphism.toFinal arbitrary⟩,
     ⟨fun first second => first.eq_toFinal.trans second.eq_toFinal.symm⟩⟩
 
+/-- A homomorphism of machines together with an inverse homomorphism. -/
+structure Isomorphism (source : Machine SourceState Input Output)
+    (target : Machine TargetState Input Output) extends Homomorphism source target where
+  /-- The homomorphism from the target back to the source. -/
+  inverse : Homomorphism target source
+  /-- The law that following the homomorphism $h$ by its inverse $h^{-1}$ gives the identity, $h^{-1} \circ h = \mathrm{id}$. -/
+  inverse_composition_toHomomorphism :
+    Homomorphism.composition inverse toHomomorphism = Homomorphism.identity source
+  /-- The law that following the inverse $h^{-1}$ by the homomorphism $h$ gives the identity, $h \circ h^{-1} = \mathrm{id}$. -/
+  toHomomorphism_composition_inverse :
+    Homomorphism.composition toHomomorphism inverse = Homomorphism.identity target
+
 end Machine
 
 end EgoNitida
