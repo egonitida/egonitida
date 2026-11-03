@@ -174,6 +174,14 @@ theorem iteratedTransitionFunction_final (state : List Input → Input → Outpu
   | nil => rfl
   | cons input remainingInputs inductionHypothesis => exact inductionHypothesis _
 
+/-- The behavior of the final machine from a behavior $\varphi$ is $\varphi$, $\mathrm{beh}(\varphi) = \varphi$. -/
+theorem behavior_final (state : List Input → Input → Output) :
+    (final Input Output).behavior state = state := by
+  funext inputs lastInput
+  show (final Input Output).iteratedTransitionFunction state inputs [] lastInput =
+    state inputs lastInput
+  simp only [iteratedTransitionFunction_final, List.append_nil]
+
 end Machine
 
 end EgoNitida
