@@ -124,6 +124,12 @@ theorem toFunction_iteratedTransitionFunction (homomorphism : Homomorphism sourc
 
 end Homomorphism
 
+/-- A function that gives the output of the last transition of a machine from a state after a nonempty sequence of inputs. -/
+@[export_typescript]
+def behavior (machine : Machine State Input Output) (state : State) (inputs : List Input)
+    (lastInput : Input) : Output :=
+  (machine.structureMap (machine.iteratedTransitionFunction state inputs) lastInput).output
+
 /-- A property of a machine into which every machine has exactly one homomorphism. -/
 def IsFinal (machine : Machine State Input Output) : Prop :=
   ∀ {ArbitraryState : Type} (arbitrary : Machine ArbitraryState Input Output),
