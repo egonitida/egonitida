@@ -1,5 +1,1 @@
-/-!
-# EgoNitida
-
-Theory of the EgoNitida engine, proved.
--/
+import EgoNitida.Machine
