@@ -11,10 +11,13 @@ name = "ExportTypeScript"
 [[lean_lib]]
 name = "Foundation"
 
-[[lean_exe]]
-name = "oracle"
-root = "Oracle"
+[[lean_lib]]
+name = "Declaration"
 
 [[lean_exe]]
-name = "declarations"
-root = "Declarations"
+name = "generator"
+root = "Declaration.Main"
+
+[[lean_exe]]
+name = "oracle"
+root = "Oracle.Main"

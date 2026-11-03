@@ -5,8 +5,8 @@
   "description": "Theory of EgoNitida, proved in Lean.",
   "type": "module",
   "scripts": {
-    "build": "lake build oracle declarations Foundation",
-    "generate": "lake exe declarations ../core/src documentation",
+    "build": "lake build oracle generator Foundation",
+    "generate": "lake exe generator ../core/src documentation",
     "tabulate": "lake exe oracle",
     "check": "npm run build && npm run generate"
   }
