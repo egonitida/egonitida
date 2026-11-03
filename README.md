@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/6zsggGTGZf"><img src=".github/assets/badges/discord.svg" alt="Discord: EgoNitida"></a> <a href="https://x.com/egonitida"><img src=".github/assets/badges/x.svg" alt="X: @egonitida"></a> <a href="https://instagram.com/egonitida"><img src=".github/assets/badges/instagram.svg" alt="Instagram: @egonitida"></a> <a href="https://threads.com/@egonitida"><img src=".github/assets/badges/threads.svg" alt="Threads: @egonitida"></a>
+  <a href="https://discord.gg/6zsggGTGZf"><img src=".github/assets/badges/discord.svg" alt="Discord: EgoNitida"></a> <a href="https://x.com/egonitida"><img src=".github/assets/badges/x.svg" alt="X: @egonitida"></a> <a href="https://instagram.com/egonitida"><img src=".github/assets/badges/instagram.svg" alt="Instagram: @egonitida"></a> <a href="https://threads.com/@egonitida"><img src=".github/assets/badges/threads.svg" alt="Threads: @egonitida"></a> <a href="https://facebook.com/egonitida"><img src=".github/assets/badges/facebook.svg" alt="Facebook: @egonitida"></a>
 </p>
 
 ---
