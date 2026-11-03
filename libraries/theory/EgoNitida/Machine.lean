@@ -97,6 +97,16 @@ theorem iteratedTransitionFunction_nil (machine : Machine State Input Output) (s
     machine.iteratedTransitionFunction state [] = state :=
   rfl
 
+/-- Iterating over two sequences $\sigma$ and $\tau$ in turn from a state $s$ reaches the state that iterating over their concatenation $\sigma \tau$ reaches, $\delta^*(s, \sigma \tau) = \delta^*(\delta^*(s, \sigma), \tau)$. -/
+theorem iteratedTransitionFunction_append (machine : Machine State Input Output) (state : State)
+    (earlierInputs laterInputs : List Input) :
+    machine.iteratedTransitionFunction state (earlierInputs ++ laterInputs) =
+      machine.iteratedTransitionFunction (machine.iteratedTransitionFunction state earlierInputs)
+        laterInputs := by
+  induction earlierInputs generalizing state with
+  | nil => rfl
+  | cons input remainingInputs inductionHypothesis => exact inductionHypothesis _
+
 /-- A property of a machine into which every machine has exactly one homomorphism. -/
 def IsFinal (machine : Machine State Input Output) : Prop :=
   ∀ {ArbitraryState : Type} (arbitrary : Machine ArbitraryState Input Output),
