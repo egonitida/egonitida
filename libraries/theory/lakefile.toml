@@ -1,7 +1,21 @@
 name = "egonitida"
 defaultTargets = ["EgoNitida"]
-fixedToolchain = true
+leanOptions = { warningAsError = true, autoImplicit = false, linter.missingDocs = true }
 
 [[lean_lib]]
 name = "EgoNitida"
-leanOptions = { warningAsError = true }
+
+[[lean_lib]]
+name = "ExportTypeScript"
+
+[[lean_exe]]
+name = "oracle"
+root = "Oracle"
+
+[[lean_exe]]
+name = "declarations"
+root = "Declarations"
+
+[[lean_exe]]
+name = "foundation"
+root = "Foundation"

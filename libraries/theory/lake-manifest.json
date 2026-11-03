@@ -4,5 +4,5 @@
   "packages": [],
   "name": "egonitida",
   "lakeDir": ".lake",
-  "fixedToolchain": true
+  "fixedToolchain": false
 }
