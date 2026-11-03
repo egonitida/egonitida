@@ -155,6 +155,16 @@ def final (Input Output : Type) : Machine (List Input → Input → Output) Inpu
     { successorState := fun inputs lastInput => currentState (input :: inputs) lastInput,
       output := currentState [] input }
 
+namespace Homomorphism
+
+/-- The homomorphism from a machine to the final machine that maps each state to its behavior. -/
+def toFinal (machine : Machine State Input Output) :
+    Homomorphism machine (final Input Output) where
+  toFunction := machine.behavior
+  commutes _ _ := rfl
+
+end Homomorphism
+
 end Machine
 
 end EgoNitida
