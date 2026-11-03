@@ -2,9 +2,13 @@
   "name": "@egonitida/theory",
   "version": "0.0.0",
   "private": true,
-  "description": "Theory of the EgoNitida engine, proved in Lean.",
+  "description": "Theory of EgoNitida, proved in Lean.",
   "type": "module",
   "scripts": {
-    "check": "lake build"
+    "build": "lake build oracle declarations foundation",
+    "verify": "lake exe foundation",
+    "generate": "lake exe declarations ../core/src documentation",
+    "tabulate": "lake exe oracle",
+    "check": "npm run build && npm run verify && npm run generate"
   }
 }
