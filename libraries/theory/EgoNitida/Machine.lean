@@ -27,9 +27,11 @@ structure Machine (State Input Output : Type) where
 
 namespace Machine
 
-variable {SourceState IntermediateState TargetState Input Output : Type}
+variable {State SourceState IntermediateState EarlierIntermediateState LaterIntermediateState
+  TargetState Input Output : Type}
 
 /-- A function that maps the states of one machine to the states of another and commutes with their structure maps. -/
+@[ext]
 structure Homomorphism (source : Machine SourceState Input Output)
     (target : Machine TargetState Input Output) where
   /-- The map from the states of the source to the states of the target. -/
@@ -42,7 +44,7 @@ structure Homomorphism (source : Machine SourceState Input Output)
 
 namespace Homomorphism
 
-variable {State : Type}
+variable {source : Machine SourceState Input Output} {target : Machine TargetState Input Output}
 
 /-- The homomorphism that maps each state of a machine to itself. -/
 def identity (machine : Machine State Input Output) : Homomorphism machine machine where
@@ -50,14 +52,33 @@ def identity (machine : Machine State Input Output) : Homomorphism machine machi
   commutes _ _ := rfl
 
 /-- The homomorphism that maps each state by one homomorphism and then by the other. -/
-def composition {source : Machine SourceState Input Output}
-    {intermediate : Machine IntermediateState Input Output}
-    {target : Machine TargetState Input Output}
+def composition {intermediate : Machine IntermediateState Input Output}
     (later : Homomorphism intermediate target) (earlier : Homomorphism source intermediate) :
     Homomorphism source target where
   toFunction state := later.toFunction (earlier.toFunction state)
   commutes currentState input := by
     rw [later.commutes, earlier.commutes]
+
+/-- Following a homomorphism $h$ by the identity gives $h$, $\mathrm{id} \circ h = h$. -/
+theorem identity_composition (homomorphism : Homomorphism source target) :
+    composition (identity target) homomorphism = homomorphism :=
+  Homomorphism.ext rfl
+
+/-- Following the identity by a homomorphism $h$ gives $h$, $h \circ \mathrm{id} = h$. -/
+theorem composition_identity (homomorphism : Homomorphism source target) :
+    composition homomorphism (identity source) = homomorphism :=
+  Homomorphism.ext rfl
+
+/-- Composing three homomorphisms $f$, $g$, and $h$ in turn gives one homomorphism whichever pair of them is composed first, $h \circ (g \circ f) = (h \circ g) \circ f$. -/
+theorem composition_associative
+    {earlierIntermediate : Machine EarlierIntermediateState Input Output}
+    {laterIntermediate : Machine LaterIntermediateState Input Output}
+    (latest : Homomorphism laterIntermediate target)
+    (middle : Homomorphism earlierIntermediate laterIntermediate)
+    (earliest : Homomorphism source earlierIntermediate) :
+    composition latest (composition middle earliest) =
+      composition (composition latest middle) earliest :=
+  Homomorphism.ext rfl
 
 end Homomorphism
 
