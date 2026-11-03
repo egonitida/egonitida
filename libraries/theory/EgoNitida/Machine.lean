@@ -82,6 +82,11 @@ theorem composition_associative
 
 end Homomorphism
 
+/-- A property of a machine into which every machine has exactly one homomorphism. -/
+def IsFinal (machine : Machine State Input Output) : Prop :=
+  ∀ {ArbitraryState : Type} (arbitrary : Machine ArbitraryState Input Output),
+    Nonempty (Homomorphism arbitrary machine) ∧ Subsingleton (Homomorphism arbitrary machine)
+
 end Machine
 
 end EgoNitida
