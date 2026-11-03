@@ -107,6 +107,23 @@ theorem iteratedTransitionFunction_append (machine : Machine State Input Output)
   | nil => rfl
   | cons input remainingInputs inductionHypothesis => exact inductionHypothesis _
 
+namespace Homomorphism
+
+variable {source : Machine SourceState Input Output} {target : Machine TargetState Input Output}
+
+/-- Mapping by a homomorphism $h$ the state that iterating over a sequence $\sigma$ from a state $s$ reaches gives the state that iterating over $\sigma$ from $h(s)$ reaches, $h(\delta^*(s, \sigma)) = \delta^*(h(s), \sigma)$. -/
+theorem toFunction_iteratedTransitionFunction (homomorphism : Homomorphism source target)
+    (state : SourceState) (inputs : List Input) :
+    homomorphism.toFunction (source.iteratedTransitionFunction state inputs) =
+      target.iteratedTransitionFunction (homomorphism.toFunction state) inputs := by
+  induction inputs generalizing state with
+  | nil => rfl
+  | cons input remainingInputs inductionHypothesis =>
+    simp only [iteratedTransitionFunction, homomorphism.commutes]
+    exact inductionHypothesis _
+
+end Homomorphism
+
 /-- A property of a machine into which every machine has exactly one homomorphism. -/
 def IsFinal (machine : Machine State Input Output) : Prop :=
   ∀ {ArbitraryState : Type} (arbitrary : Machine ArbitraryState Input Output),
