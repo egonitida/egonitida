@@ -82,6 +82,16 @@ theorem composition_associative
 
 end Homomorphism
 
+/-- A function that gives the state a machine reaches from a state after a sequence of inputs. -/
+@[export_typescript]
+def iteratedTransitionFunction (machine : Machine State Input Output) (state : State)
+    (inputs : List Input) : State :=
+  match inputs with
+  | [] => state
+  | input :: remainingInputs =>
+    machine.iteratedTransitionFunction (machine.structureMap state input).successorState
+      remainingInputs
+
 /-- A property of a machine into which every machine has exactly one homomorphism. -/
 def IsFinal (machine : Machine State Input Output) : Prop :=
   ∀ {ArbitraryState : Type} (arbitrary : Machine ArbitraryState Input Output),
