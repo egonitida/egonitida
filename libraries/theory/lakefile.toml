@@ -8,6 +8,9 @@ name = "EgoNitida"
 [[lean_lib]]
 name = "ExportTypeScript"
 
+[[lean_lib]]
+name = "Foundation"
+
 [[lean_exe]]
 name = "oracle"
 root = "Oracle"
@@ -15,7 +18,3 @@ root = "Oracle"
 [[lean_exe]]
 name = "declarations"
 root = "Declarations"
-
-[[lean_exe]]
-name = "foundation"
-root = "Foundation"
