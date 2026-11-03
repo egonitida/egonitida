@@ -182,6 +182,22 @@ theorem behavior_final (state : List Input → Input → Output) :
     state inputs lastInput
   simp only [iteratedTransitionFunction_final, List.append_nil]
 
+/-- Every machine has exactly one homomorphism $h$ into the final machine, and $h$ maps each state to its behavior, $h = \mathrm{beh}$. -/
+theorem isFinal_final : IsFinal (final Input Output) := by
+  intro ArbitraryState arbitrary
+  refine ⟨⟨Homomorphism.toFinal arbitrary⟩, ⟨fun first second => ?_⟩⟩
+  apply Homomorphism.ext
+  funext state inputs lastInput
+  calc first.toFunction state inputs lastInput
+      = (final Input Output).behavior (first.toFunction state) inputs lastInput := by
+        rw [behavior_final]
+    _ = arbitrary.behavior state inputs lastInput :=
+        first.behavior_toFunction state inputs lastInput
+    _ = (final Input Output).behavior (second.toFunction state) inputs lastInput :=
+        (second.behavior_toFunction state inputs lastInput).symm
+    _ = second.toFunction state inputs lastInput := by
+        rw [behavior_final]
+
 end Machine
 
 end EgoNitida
