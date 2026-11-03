@@ -157,7 +157,7 @@ def final (Input Output : Type) : Machine (List Input → Input → Output) Inpu
 
 namespace Homomorphism
 
-/-- The homomorphism from a machine to the final machine that maps each state to its behavior. -/
+/-- The homomorphism that maps each state of a machine to its behavior. -/
 def toFinal (machine : Machine State Input Output) :
     Homomorphism machine (final Input Output) where
   toFunction := machine.behavior
@@ -216,6 +216,18 @@ structure Isomorphism (source : Machine SourceState Input Output)
   toHomomorphism_composition_inverse :
     Homomorphism.composition toHomomorphism inverse = Homomorphism.identity target
 
+namespace Homomorphism
+
+variable {source : Machine SourceState Input Output} {target : Machine TargetState Input Output}
+
+/-- A property of a homomorphism that has an inverse homomorphism. -/
+def IsIsomorphism (homomorphism : Homomorphism source target) : Prop :=
+  ∃ inverse : Homomorphism target source,
+    composition inverse homomorphism = identity source ∧
+      composition homomorphism inverse = identity target
+
+end Homomorphism
+
 namespace IsFinal
 
 /-- Any two final machines $M$ and $N$ have an isomorphism from $M$ to $N$, $M \cong N$. -/
@@ -229,6 +241,48 @@ theorem nonempty_isomorphism {source : Machine SourceState Input Output}
     inverse := toSource
     inverse_composition_toHomomorphism := @Subsingleton.elim _ (sourceIsFinal source).2 _ _
     toHomomorphism_composition_inverse := @Subsingleton.elim _ (targetIsFinal target).2 _ _ }⟩
+
+end IsFinal
+
+/-- The machine whose states are the functions from inputs to outcomes of a machine, made of it by the Mealy functor. -/
+def functorImage (machine : Machine State Input Output) :
+    Machine (Input → Outcome State Output) Input Output where
+  structureMap currentState input :=
+    { successorState := machine.structureMap (currentState input).successorState,
+      output := (currentState input).output }
+
+namespace Homomorphism
+
+/-- The homomorphism that maps each state of a machine by its structure map. -/
+def toFunctorImage (machine : Machine State Input Output) :
+    Homomorphism machine (functorImage machine) where
+  toFunction := machine.structureMap
+  commutes _ _ := rfl
+
+end Homomorphism
+
+namespace IsFinal
+
+/-- The structure map $\zeta$ of a final machine with states $Z$ is an isomorphism onto the machine the Mealy functor $F$ makes of it, $\zeta : Z \cong F(Z)$. -/
+theorem isIsomorphism_toFunctorImage {machine : Machine State Input Output}
+    (machineIsFinal : IsFinal machine) :
+    (Homomorphism.toFunctorImage machine).IsIsomorphism := by
+  obtain ⟨⟨inverse⟩, _⟩ := machineIsFinal (functorImage machine)
+  have inverse_composition_toFunctorImage :
+      Homomorphism.composition inverse (Homomorphism.toFunctorImage machine) =
+        Homomorphism.identity machine :=
+    @Subsingleton.elim _ (machineIsFinal machine).2 _ _
+  have inverse_structureMap (state : State) :
+      inverse.toFunction (machine.structureMap state) = state :=
+    congrFun (congrArg Homomorphism.toFunction inverse_composition_toFunctorImage) state
+  refine ⟨inverse, inverse_composition_toFunctorImage, ?_⟩
+  apply Homomorphism.ext
+  funext currentState input
+  show machine.structureMap (inverse.toFunction currentState) input = currentState input
+  rw [inverse.commutes]
+  show Outcome.mk (inverse.toFunction (machine.structureMap (currentState input).successorState))
+    (currentState input).output = currentState input
+  rw [inverse_structureMap]
 
 end IsFinal
 
