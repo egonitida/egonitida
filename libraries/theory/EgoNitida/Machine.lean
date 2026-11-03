@@ -165,6 +165,15 @@ def toFinal (machine : Machine State Input Output) :
 
 end Homomorphism
 
+/-- Iterating over a sequence $\sigma$ in the final machine from a behavior $\varphi$ reaches the behavior that gives each sequence $\tau$ followed by a last input $i$ what $\varphi$ gives the concatenation $\sigma \tau$ followed by $i$, $\delta^*(\varphi, \sigma) = (\tau i \mapsto \varphi(\sigma \tau i))$. -/
+theorem iteratedTransitionFunction_final (state : List Input → Input → Output)
+    (inputs : List Input) :
+    (final Input Output).iteratedTransitionFunction state inputs =
+      fun laterInputs lastInput => state (inputs ++ laterInputs) lastInput := by
+  induction inputs generalizing state with
+  | nil => rfl
+  | cons input remainingInputs inductionHypothesis => exact inductionHypothesis _
+
 end Machine
 
 end EgoNitida
