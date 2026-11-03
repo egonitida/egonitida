@@ -92,6 +92,11 @@ def iteratedTransitionFunction (machine : Machine State Input Output) (state : S
     machine.iteratedTransitionFunction (machine.structureMap state input).successorState
       remainingInputs
 
+/-- Iterating over no inputs leaves a state $s$ as it was, $\delta^*(s, \langle\rangle) = s$. -/
+theorem iteratedTransitionFunction_nil (machine : Machine State Input Output) (state : State) :
+    machine.iteratedTransitionFunction state [] = state :=
+  rfl
+
 /-- A property of a machine into which every machine has exactly one homomorphism. -/
 def IsFinal (machine : Machine State Input Output) : Prop :=
   ∀ {ArbitraryState : Type} (arbitrary : Machine ArbitraryState Input Output),
