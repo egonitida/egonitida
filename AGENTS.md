@@ -1,6 +1,6 @@
 # EgoNitida
 
-EgoNitida is a real-time 3D engine for web applications and games. This repository is its monorepo: the engine's libraries in `libraries/`, the applications built on them in `applications/`, and the Cloudflare account state they run on in `infrastructure/`.
+EgoNitida is a real-time 3D engine for web applications and games. This repository is its monorepo: the engine's libraries in `libraries/`, the applications built on them in `applications/`, the examples of how to use them in `examples/`, and the Cloudflare account state they run on in `infrastructure/`.
 
 ## Toolchain
 
@@ -142,6 +142,218 @@ Every declaration in the libraries and the examples carries a TSDoc comment, and
   | the law of joined sequences | `iteratedTransitionFunction_append`, "Iterating over two sequences $\sigma$ and $\tau$ in turn from a state $s$ reaches…, $\delta^*(s, \sigma \tau) = …$" | `lemma3`, "Proves that append works." |
 
 A line comment on a configured value takes the form the TypeScript configuration sets out: one line on who takes the job or what the value is checked against, such as `Type tests checked by TypeScript beside the tests Vitest runs.`
+
+## Naming
+
+A name is the first thing a reader learns about anything in the code, and often all they read before they use it. Modules, types, values, functions and parameters are therefore named with the same care, so that each name can be trusted to mean what it says.
+
+- A name says what it stands for, not where that comes from.
+
+  | Meaning                      | Fits        | Misses           |
+  | ---------------------------- | ----------- | ---------------- |
+  | draws random numbers         | `generator` | `mulberry32`     |
+  | tells one thing from another | `id`        | `uuid`           |
+  | tells the time               | `clock`     | `performanceNow` |
+
+- A name is explicit rather than implied, longer and exact over short and left to guess, in the context it is read in.
+
+  | Meaning             | Fits        | Misses |
+  | ------------------- | ----------- | ------ |
+  | where a point is    | `position`  | `pos`  |
+  | one component       | `component` | `c`    |
+  | the input of a step | `Input`     | `I`    |
+
+- A word is taken in its real meaning, as a dictionary gives it, not in an established convention or in how it strikes a reader.
+
+  | Meaning                              | Fits      | Misses   |
+  | ------------------------------------ | --------- | -------- |
+  | puts a new value in place of the old | `replace` | `update` |
+  | looks something up in memory         | `find`    | `fetch`  |
+  | takes an entity out of the state     | `remove`  | `kill`   |
+
+- A term comes from the field that defines it, in that field's meaning. What no field defines is named in academic English.
+
+  | Meaning                                  | Fits       | Misses    |
+  | ---------------------------------------- | ---------- | --------- |
+  | combines a list into one value, in order | `fold`     | `reduce`  |
+  | the rate at which a position changes     | `velocity` | `speed`   |
+  | applies a function to every value        | `map`      | `forEach` |
+
+- A boolean is named by the quality it states. A function that asks for one is named with `is` or `has`.
+
+  | Meaning                          | Fits       | Misses       |
+  | -------------------------------- | ---------- | ------------ |
+  | whether it is turned off         | `disabled` | `isDisabled` |
+  | asks whether an option holds one | `isSome`   | `some`       |
+  | asks whether a set holds a value | `has`      | `contains`   |
+
+## Documentation Pages
+
+A page of the documentation is read from its title to its end as one piece, so its prose answers to rules of its own, beyond what each sentence needs on its own.
+
+- No two paragraphs of a page open with the same word, counting the description under its title.
+
+  | Meaning                        | Fits                                               | Misses                                            |
+  | ------------------------------ | -------------------------------------------------- | ------------------------------------------------- |
+  | the openings of two paragraphs | Beneath every application… / Inside every machine… | Beneath every application… / Beneath every state… |
+
+- A page's description is the highest view of the page, the one sentence everything else on the page unfolds.
+
+  | Meaning                           | Fits                                                                                                    | Misses                                                        |
+  | --------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+  | what the Simulation page is about | Beneath every application built on the engine, machines run, each transitioning from its current state… | States consist of relations, and relations consist of tuples. |
+
+- Every section opens with a short introduction that names the terms of the section without explaining them, and a figure right under it explains them. The introduction is the only prose between the heading and the figure, and after the figure the section may go on in prose and further figures.
+
+  | Meaning              | Fits                                                                                         | Misses                                                                                  |
+  | -------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+  | what a simulation is | …machines, each transitioning from its current state, upon an input…, then the Mealy machine | …machines, each a Mealy machine, a tuple (S, S₀, Σ, Λ, T, G) whose transition function… |
+
+- A heading is an uncountable noun, the name of the idea its section sets out, never one thing nor many.
+
+  | Meaning                            | Fits        | Misses              |
+  | ---------------------------------- | ----------- | ------------------- |
+  | what the machine takes in          | Input       | Inputs              |
+  | how a machine moves between states | Transition  | A Transition        |
+  | whether one past gives one future  | Determinism | Deterministic Steps |
+
+- Every figure links to the study or paper it rests on, its author and year in the corner of the figure.
+
+  | Meaning                    | Fits                                  | Misses                          |
+  | -------------------------- | ------------------------------------- | ------------------------------- |
+  | the formula of the machine | f : S → (S × O)^I, with ↗ Mealy, 1955 | f : S → (S × O)^I, with no link |
+  - Where the idea and its notation come from different works, the figure links to both, the origin of the idea first.
+
+    | Meaning                      | Fits                                                 | Misses                                |
+    | ---------------------------- | ---------------------------------------------------- | ------------------------------------- |
+    | where the formula comes from | f : S → (S × O)^I, with ↗ Mealy, 1955 ↗ Jacobs, 2016 | f : S → (S × O)^I, with ↗ Mealy, 1955 |
+
+- A figure is a definition, an example, or an illustration. A definition states its idea in the notation of the works it links to, an example gives a definition values, and an illustration shows an idea and states nothing.
+
+  | Meaning                  | Fits                                                      | Misses                                     |
+  | ------------------------ | --------------------------------------------------------- | ------------------------------------------ |
+  | the figure of a relation | r ⊆ { t \| ∀a ∈ A : t(a) ∈ D(a) }, then a board of floors | a board of floors alone, as the definition |
+
+- Under every definition stands an example of it, which moves as the definition says, in steps that can be paused and taken forward and back, the same every time. Without motion its steps stand side by side, and the agent Markdown gives them as a table.
+
+  | Meaning                    | Fits                                                                                  | Misses                                                |
+  | -------------------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+  | the example of the machine | one transition of an elevator, s and i going in and o and s′ coming out, step by step | a still drawing, or an elevator that moves on its own |
+
+- Every example comes from one world, an elevator, which the cards of the glossary share with every page.
+
+  | Meaning                  | Fits                           | Misses                                                         |
+  | ------------------------ | ------------------------------ | -------------------------------------------------------------- |
+  | an example of a relation | the board of floors in a lobby | a board of floors on one page and a billiard table on the next |
+
+- The prose says in words everything a figure states, so a reader who never looks at a figure misses nothing.
+
+  | Meaning                     | Fits                                                                                                                            | Misses                                    |
+  | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+  | what the Mealy machine says | One function makes up every machine. Its structure map takes the current state and an input to a successor state and an output… | f : S → (S × O)^I, with no words after it |
+
+- Every definition and every example has a declaration in Lean in `libraries/theory`, named after its term, and the documentation comment of the declaration is the card of the term.
+
+  | Meaning             | Fits                                                                                | Misses                                                             |
+  | ------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+  | the machine in Lean | `structure Machine`, commented "A state-based system that transitions upon inputs…" | a figure with no declaration, or a comment that says another thing |
+
+- An example is drawn in SVG until the engine runs inside the documentation, and from then on it runs on the engine.
+
+  | Meaning                | Fits                                    | Misses                                          |
+  | ---------------------- | --------------------------------------- | ----------------------------------------------- |
+  | what draws the example | SVG now, the engine once it is embedded | a video, or a drawing the engine never replaces |
+
+- A statement is exactly as general as what it is true of, never narrowed to one case of it nor widened beyond it.
+
+  | Meaning                       | Fits                                           | Misses                               |
+  | ----------------------------- | ---------------------------------------------- | ------------------------------------ |
+  | where the machines run        | Beneath every application built on the engine… | Beneath every real-time application… |
+  | how many machines an app runs | …run machines, each…                           | …runs one machine, which…            |
+
+- Prose says what a thing is and what it does, never why it is good or who else relies on it.
+
+  | Meaning         | Fits                                                                                         | Misses                                                                                                       |
+  | --------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+  | what a state is | Inside every machine, a state holds the information the machine carries between transitions… | Every state takes its shape from the mathematics that has kept the world's data in order for half a century. |
+  - Prose never lists what can be done with a thing. What a thing is and what it does are said, and its uses are left to the reader.
+
+    | Meaning                 | Fits                                                                       | Misses                                                                           |
+    | ----------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+    | whether a state changes | Once made, a state never changes, as a transition makes a successor state… | Once made, a state never changes, and it can travel to a disk, across a network… |
+
+- No word judges what it describes, such as quiet, powerful, simple, elegant, or fast. A word says what a thing is or does, and the reader judges.
+
+  | Meaning                          | Fits                                                               | Misses                                                                   |
+  | -------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+  | what runs beneath an application | Beneath every application built on the engine, machines run, each… | Beneath every application built on the engine, quiet machines run, each… |
+
+- No paragraph opens with an article. The reference and the cards of the glossary are the exceptions, as both say what a thing is in the form of a documentation comment, which opens with one.
+
+  | Meaning                        | Fits                                                | Misses                                        |
+  | ------------------------------ | --------------------------------------------------- | --------------------------------------------- |
+  | what a state keeps of the past | Nothing from the past survives among the relations… | The state keeps nothing from the past unless… |
+
+- No possessive is written with an apostrophe, here or anywhere else, the documentation comments included. What belongs to something is said with "of".
+
+  | Meaning                | Fits                   | Misses            |
+  | ---------------------- | ---------------------- | ----------------- |
+  | the state of a machine | the state of a machine | a machine's state |
+
+- A pronoun points to one thing alone, the last that could be meant. Where two could be meant, the thing is named again.
+
+  | Meaning                             | Fits                                                                         | Misses                                                  |
+  | ----------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------- |
+  | how a machine moves on from a state | …unless its future depends on it. Whichever way a machine reached its state… | …unless its future depends on it. However it got there… |
+
+- Prose never speaks to the reader. It neither addresses them nor tells them what to do, notice, or remember.
+
+  | Meaning                 | Fits                                         | Misses                                            |
+  | ----------------------- | -------------------------------------------- | ------------------------------------------------- |
+  | whether a state changes | Once made, a state never changes…            | You cannot change a state once it is made…        |
+  | what the figure shows   | Three relations belong to the engine itself… | Notice that three relations belong to the engine… |
+
+- No personal pronoun stands in the prose: no I, we, you, he, she, or they for a person. Whoever acts is named.
+
+  | Meaning                   | Fits                                    | Misses                           |
+  | ------------------------- | --------------------------------------- | -------------------------------- |
+  | how a relation is defined | A relation is defined over its domains… | We define a relation over…       |
+  | who wrote the paper       | Codd set out the relational model…      | He set out the relational model… |
+
+- A term is named in the introduction of its section and explained by the figure under it, and from there on it means that alone. One thing keeps one name, never varied for the sake of style.
+
+  | Meaning               | Fits                             | Misses                        |
+  | --------------------- | -------------------------------- | ----------------------------- |
+  | one row of a relation | a tuple… the tuple… every tuple… | a tuple… the row… every fact… |
+  - Where the field knows one thing by several names, one of them is chosen, and the others never appear.
+
+    | Meaning                                          | Fits                    | Misses                    |
+    | ------------------------------------------------ | ----------------------- | ------------------------- |
+    | what holds a state and transitions upon an input | a machine… the machine… | a machine… the automaton… |
+
+- A term, a word the page takes in the meaning a field defines for it, is marked at every appearance, `:Term[the words]{id="…"}`, so its card, what it is in one sentence and an example of one, is a pointer away wherever it stands.
+
+  | Meaning                | Fits                                         | Misses                      |
+  | ---------------------- | -------------------------------------------- | --------------------------- |
+  | a term in running text | :Term[successor state]{id="successor-state"} | successor state, left plain |
+
+- A symbol is introduced before it is used, by its name in the text or by the words a figure sets under it.
+
+  | Meaning                 | Fits                                              | Misses                            |
+  | ----------------------- | ------------------------------------------------- | --------------------------------- |
+  | the states of a machine | f : S → (S × O)^I, with S annotated as the states | f : S → (S × O)^I, S left unnamed |
+
+- A sentence runs from its start to its end without a clause set into its middle, and says its thing in the shortest construction that keeps it exact.
+
+  | Meaning                        | Fits                                                                                   | Misses                                                                                                   |
+  | ------------------------------ | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+  | what a state keeps of the past | …a state keeps the part of the past that the future depends on, as a set of relations. | …a state holds, as a set of relations, just as much of the past as the future of the machine depends on. |
+
+- No contraction is written.
+
+  | Meaning                 | Fits            | Misses        |
+  | ----------------------- | --------------- | ------------- |
+  | a state does not change | does not, it is | doesn't, it's |
 
 ## Zone Configuration
 
