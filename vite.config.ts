@@ -1,5 +1,9 @@
 import { recommended } from '@effect/tsgo/oxlint-presets';
+import foldkit from '@foldkit/oxlint-plugin';
 import { defineConfig } from 'vite-plus';
+
+/** Where the website lives, whose code Foldkit's own rules hold to as well. */
+const website = 'applications/website/';
 
 export default defineConfig({
   staged: {
@@ -24,9 +28,21 @@ export default defineConfig({
       'typescript/consistent-return': 'error',
     },
     options: { typeAware: true, typeCheck: true },
+    overrides: [
+      {
+        files: [`${website}**`],
+        jsPlugins: foldkit.configs.recommended.jsPlugins,
+        rules: foldkit.configs.recommended.rules,
+      },
+      ...foldkit.configs.recommended.overrides.map(({ files, excludeFiles, rules }) => ({
+        files: files.map((file) => `${website}${file}`),
+        excludeFiles: excludeFiles?.map((file) => `${website}${file}`) ?? [],
+        rules,
+      })),
+    ],
   },
   test: {
-    projects: ['libraries/*'],
+    projects: ['applications/*', 'examples/*', 'libraries/*'],
   },
   run: {
     cache: true,

@@ -15,7 +15,7 @@ npm create egonitida
 | Requirement      | Supported                |
 | ---------------- | ------------------------ |
 | Operating system | macOS, Linux, or Windows |
-| Node.js          | `>=24.11.1`              |
+| Node.js          | `>=26.0.0`               |
 
 ## Links
 

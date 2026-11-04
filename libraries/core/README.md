@@ -17,7 +17,7 @@ npm install @egonitida/core
 | Chrome, Edge | 136 or later, 144 or later on Linux |
 | Firefox      | 141 or later                        |
 | Safari       | 26 or later                         |
-| Node.js      | `>=24.11.1`                         |
+| Node.js      | `>=26.0.0`                          |
 | workerd      | Any                                 |
 
 ## Links

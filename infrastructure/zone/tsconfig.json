@@ -1,9 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["es2025"], // Built-in API checked against Node.js 24.
+    "lib": ["es2025"], // Built-in API checked against Node.js 26.
     "module": "preserve", // Imports resolved by Alchemy instead.
-    "types": ["node"] // Host API checked against Node.js 24.
+    "types": ["node"] // Host API checked against Node.js 26.
   },
   "include": ["**/*.ts"]
 }

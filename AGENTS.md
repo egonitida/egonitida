@@ -28,7 +28,7 @@ TypeScript 7 checks types and nothing else. Every other job has a tool of its ow
 
 **Decisions behind the values:**
 
-- `lib` matches the runtime, checked rather than assumed: `es2025` for Node.js 24, `es2022` and `dom` for Vite's default build target in the browser, and `es2025` without host types for engine code that runs everywhere, as the engine is WebGPU only and every WebGPU-generation browser has ES2025. TypeScript checks the API; nothing else can, as Rolldown lowers syntax but never adds API.
+- `lib` matches the runtime, checked rather than assumed: `es2025` for Node.js 26, `es2022` and `dom` for Vite's default build target in the browser, and `es2025` without host types for engine code that runs everywhere, as the engine is WebGPU only and every WebGPU-generation browser has ES2025. TypeScript checks the API; nothing else can, as Rolldown lowers syntax but never adds API.
 - `target` stays `esnext` in the base. Syntax is lowered by Rolldown, which bundles everything that ships, browser and workerd alike, and Node.js rejects what it cannot parse. TypeScript does not police syntax.
 - `module` is `preserve` wherever a bundler or a loader resolves imports, which is every project today, and `nodenext` only where Node.js resolves them itself.
 - `allowImportingTsExtensions` and `.ts` import specifiers belong only to scripts that Node.js runs as-is. Everything bundled imports without an extension.
@@ -36,7 +36,7 @@ TypeScript 7 checks types and nothing else. Every other job has a tool of its ow
 - `@types/node` is pinned to the Node.js major in `engines.node`, so the published code is checked against the oldest runtime it supports. The comments that name the version move with it.
 - Options keep their TypeScript 7 defaults unless a reason is written beside them: `strict`, `types: []`, `moduleResolution` follow from what is set.
 
-**Comments.** Every compiler option that is set carries a one-line comment in one form, stating who takes the job or what the value is checked against, without explaining why: ``Rule checked by Oxlint `eslint/no-unreachable` instead.``, `Rule checked by TypeScript, as Oxlint has no equivalent.`, `Imports resolved by Rolldown instead.`, `Built-in API checked against Node.js 24.`
+**Comments.** Every compiler option that is set carries a one-line comment in one form, stating who takes the job or what the value is checked against, without explaining why: ``Rule checked by Oxlint `eslint/no-unreachable` instead.``, `Rule checked by TypeScript, as Oxlint has no equivalent.`, `Imports resolved by Rolldown instead.`, `Built-in API checked against Node.js 26.`
 
 ## Documentation Comments
 
