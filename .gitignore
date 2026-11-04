@@ -22,3 +22,9 @@ dist/
 
 # IDE
 .zed/
+
+# Lean declarations written as TypeScript
+*.generated.ts
+
+# Lean modules written as Markdown for the docs
+libraries/theory/documentation/

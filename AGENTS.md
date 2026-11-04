@@ -38,17 +38,108 @@ TypeScript 7 checks types and nothing else. Every other job has a tool of its ow
 
 **Comments.** Every compiler option that is set carries a one-line comment in one form, stating who takes the job or what the value is checked against, without explaining why: ``Rule checked by Oxlint `eslint/no-unreachable` instead.``, `Rule checked by TypeScript, as Oxlint has no equivalent.`, `Imports resolved by Rolldown instead.`, `Built-in API checked against Node.js 26.`
 
+## Theory and Implementation
+
+The engine is defined in Lean in `libraries/theory` before it is written in TypeScript, and the TypeScript is checked against what Lean computes.
+
+The decisions the core rests on are recorded in [DECISIONS.md](documentation/DECISIONS.md).
+
+**One rule decides what Lean defines: whatever two hosts must compute to the same bits.** The machine, its states, inputs and outputs, numbers, the random generator, the composition of a transition, and the encoding of a state and a log are defined in Lean. Rendering, sound, devices, the network, storage, and the runtime are not, as they carry or show what the machine computes and compute nothing it depends on. Mathematics that rendering shares with the machine, such as a transform used for collisions, is defined in Lean.
+
+| Meaning                       | Fits                  | Misses                |
+| ----------------------------- | --------------------- | --------------------- |
+| where a rule of physics lives | Lean, then TypeScript | TypeScript alone      |
+| where a shader lives          | TypeScript alone      | Lean, then TypeScript |
+
+**One rule orders the work: each part of a feature comes from the part before it, first its definitions in Lean, then its tests, then its implementation, then its documentation.**
+
+- A declaration of the theory rests on the standard axioms of Lean alone, `propext`, `Quot.sound`, and `Classical.choice`, and is computed as Lean checks it: never an axiom, `opaque`, `partial`, `unsafe`, `noncomputable`, `@[implemented_by]`, or `@[extern]`. `npm run build` checks every declaration in `npm run check`. The tools beside the theory, `Oracle`, `Declaration`, `Foundation`, and `ExportTypeScript`, may be partial, as they decide nothing about the engine.
+- A declaration in Lean marked `@[export_typescript]` is written as TypeScript by `npm run generate` into `<Module>.generated.ts`, which `npm run check` writes and git ignores. That module is the public one: its types with their documentation comments, a `make` for each structure, and the export of each function from `<Module>.ts`. `<Module>.ts` is written by hand and holds the functions alone, each on its generated type and under the documentation comment of Lean, which `npm run generate` checks.
+- Its tests come from what Lean computes, as [TESTING.md](documentation/TESTING.md) sets out, and fail until the implementation exists. The interface of the implementation is decided with them, as they call it.
+- The implementation is done once its tests pass.
+- The encyclopedia is read from the definitions in Lean, and the guides and the reference from the implementation. The Proof section of the reference holds every module of the theory whole, as `npm run generate` writes it into `libraries/theory/documentation`, which git ignores.
+- What can be derived from a result is neither returned nor stored.
+
+  | Meaning                                     | Fits    | Misses                                     |
+  | ------------------------------------------- | ------- | ------------------------------------------ |
+  | the result of a sequence of inputs, in Lean | `State` | `State × List Output`, the outputs as well |
+
+**How the TypeScript copies the Lean:** a declaration in TypeScript has the name, the documentation comment, and the shape of its declaration in Lean, and differs only where that shape is not how JavaScript writes it. `Declaration` writes each of these rules but the one on the modules of Effect, which holds for the bodies written by hand, so a change to any other changes the generator.
+
+- A function takes its arguments together, as JavaScript writes them, where Lean curries them by the convention of its language.
+
+  | Meaning                     | Fits                                              | Misses                                                |
+  | --------------------------- | ------------------------------------------------- | ----------------------------------------------------- |
+  | the transition of a machine | `(currentState, input) => Outcome<State, Output>` | `(currentState) => (input) => Outcome<State, Output>` |
+
+- A structure is made by `make`, given its fields by name, as Lean gives them.
+
+  | Meaning          | Fits                             | Misses                       |
+  | ---------------- | -------------------------------- | ---------------------------- |
+  | making a machine | `Machine.make({ structureMap })` | `Machine.make(structureMap)` |
+
+- A function takes its arguments in order, as Lean takes them, and has one form of call alone.
+
+  | Meaning                    | Fits                                                 | Misses                                                                             |
+  | -------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------- |
+  | the state after the inputs | `iteratedTransitionFunction(machine, state, inputs)` | the same with `pipe(machine, iteratedTransitionFunction(state, inputs))` beside it |
+
+- A function is pure wherever its definition in Lean is, and returns its value rather than an effect.
+
+  | Meaning                    | Fits    | Misses                 |
+  | -------------------------- | ------- | ---------------------- |
+  | the state after the inputs | `State` | `Effect.Effect<State>` |
+
+- A function computes with the modules of Effect wherever one has the operation, and with the built-in methods of JavaScript nowhere else.
+
+  | Meaning                    | Fits                             | Misses                    |
+  | -------------------------- | -------------------------------- | ------------------------- |
+  | the state after the inputs | `Array.reduce(inputs, state, …)` | `inputs.reduce(…, state)` |
+
+- A finite sequence stays finite, as a list in Lean is.
+
+  | Meaning                 | Fits                   | Misses            |
+  | ----------------------- | ---------------------- | ----------------- |
+  | the inputs of a machine | `ReadonlyArray<Input>` | `Iterable<Input>` |
+
+- A type parameter states its variance, as its place in the definition gives it, and TypeScript checks the statement against the structure.
+
+  | Meaning                     | Fits                                          | Misses                          |
+  | --------------------------- | --------------------------------------------- | ------------------------------- |
+  | the parameters of a machine | `Machine<in out State, in Input, out Output>` | `Machine<State, Input, Output>` |
+
+- A value whose parts have names is a structure in Lean, so each part carries the term it stands for, and never a product whose parts have positions alone.
+
+  | Meaning                    | Fits                                                         | Misses                     |
+  | -------------------------- | ------------------------------------------------------------ | -------------------------- |
+  | the result of a transition | `Outcome<State, Output>`, with `successorState` and `output` | `readonly [State, Output]` |
+
 ## Documentation Comments
 
-Every declaration in the libraries and the examples carries a TSDoc comment, and the reference of `@egonitida/core` is read from them, so a comment is written for readers.
+Every declaration in the libraries and the examples carries a TSDoc comment, and the reference of `@egonitida/core` is read from them, so a comment is written for readers. A declaration written from Lean carries the comment of Lean, generated or checked against it.
 
 **One rule decides what a comment says: what the symbol is, in one sentence, and nothing else.**
 
 - Never repeat the symbol's name, never say what it is not, and never explain why it is so: `/** An identity in a simulation. */` for `Entity`, not `/** An entity: a thing that is there, known by its id. */`.
 - Bring in another term only when it is what tells the symbol apart: `/** A kind of data that describes an entity. */` for `Component`, as "A kind of data in a simulation." fits the tick as well.
 - A type or a definition opens with "A" or "An", a field or a specific thing with "The": `/** The name that identifies it. */`.
-- A function says what it does with a verb that is not its own name: `/** Creates a component from its name and schema. */` for `make`.
+- A function written in TypeScript alone says what it does with a verb that is not its own name: `/** Creates a component from its name and schema. */` for `make`. A function from Lean carries the comment of Lean, as Documentation in Lean sets out.
 - A schema and its type of the same name pair up: `/** A schema of an identity in a simulation. */` beside `/** An identity in a simulation. */`.
+- No possessive is written with an apostrophe. What belongs to something is said with "of", as the documentation pages set out.
+
+**Documentation in Lean.** Every declaration of the theory carries a documentation comment, which `linter.missingDocs` requires, and it is the comment TypeScript and the glossary carry. A module opens with a documentation comment in the form Mathlib gives it: a summary, `## Main definitions`, `## Implementation notes` where it has any, and `## References`, its mathematics in LaTeX between `$`, which the docs set as MathML Core.
+
+- A declaration says what it is, in one sentence, a function included, as its comment is the card of its term. The rules above on what a comment leaves out hold as well: it never repeats the name, never says what a thing is not, never explains why, and writes no possessive with an apostrophe.
+
+  | Meaning                          | Fits                                                                                         | Misses                                                                          |
+  | -------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+  | the iterated transition function | "A function that gives the state a machine reaches from a state after a sequence of inputs." | "Gives the state a machine reaches…", as a function in TypeScript alone says it |
+
+- A law is a `theorem` named by what it states, in snake case after the declaration it speaks of, as Mathlib names it, and its comment states it in one sentence that introduces every variable of its formula, with the formula after it. The notation of a declaration, such as $\delta^*$ or $\circ$, comes from the `## Main definitions` of the module.
+
+  | Meaning                     | Fits                                                                                                                                                      | Misses                                |
+  | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+  | the law of joined sequences | `iteratedTransitionFunction_append`, "Iterating over two sequences $\sigma$ and $\tau$ in turn from a state $s$ reaches…, $\delta^*(s, \sigma \tau) = …$" | `lemma3`, "Proves that append works." |
 
 A line comment on a configured value takes the form the TypeScript configuration sets out: one line on who takes the job or what the value is checked against, such as `Type tests checked by TypeScript beside the tests Vitest runs.`
 

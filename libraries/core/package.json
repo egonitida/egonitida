@@ -29,12 +29,21 @@
   "imports": {
     "#src/*": "./src/*.ts"
   },
-  "exports": {},
+  "exports": {
+    "./Machine": {
+      "@egonitida/source": "./src/Machine.generated.ts",
+      "types": "./dist/Machine.d.mts",
+      "default": "./dist/Machine.mjs"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "prepack": "vp pack"
+    "prepack": "npm run check --workspace @egonitida/theory && vp pack"
+  },
+  "devDependencies": {
+    "@egonitida/theory": "0.0.0"
   },
   "peerDependencies": {
     "effect": "^4.0.0"

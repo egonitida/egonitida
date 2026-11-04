@@ -22,7 +22,7 @@
   "type": "module",
   "scripts": {
     "prepare": "vp config && effect-tsgo patch --no-typescript --oxlint",
-    "check": "vp check && npm run check -w @egonitida/theory"
+    "check": "npm run check -w @egonitida/theory && vp check"
   },
   "devDependencies": {
     "@alchemy.run/cloudflare": "2.0.0-beta.85",

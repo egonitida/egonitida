@@ -11,7 +11,7 @@ Tests run on Vitest through `vp test`, and every change passes them before it is
 **Where tests live and what they import:**
 
 - A test sits beside the module it checks, `Entity.test.ts` beside `Entity.ts`.
-- Libraries write their tests with `@effect/vitest`, `it` for plain tests and `it.effect` for effects. Applications write theirs with `vite-plus/test` and `test`.
+- Libraries and examples write their tests with `@effect/vitest`, `it` for plain tests, `it.effect` for effects and `it.effect.prop` for properties. Applications write theirs with `vite-plus/test` and `test`.
 
 **How a test is written:**
 
@@ -23,4 +23,4 @@ Tests run on Vitest through `vp test`, and every change passes them before it is
 - A decision about types is checked with `expectTypeOf`, `expectTypeOf<number>().not.toExtend<Entity>()`. Vitest's typecheck mode, switched on in every project's `vite.config.ts`, runs it through TypeScript, so a type test fails in `vp test` like any other.
 - A call that must not compile is written out under `// @ts-expect-error`, followed by a sentence saying why it fails, inside a function that never runs, `expectTypeOf(() => …).toBeFunction()`, so it is only ever checked. Once the call compiles, the comment has nothing left to expect, and the typecheck fails the test.
 
-**Tests and the theory:** a law the Lean theory proves gets a property test in Vitest, on values generated from the schemas, so the TypeScript implementation is checked against the same law the model is proved to keep.
+**Tests and the theory:** a definition of the Lean theory is checked against the values Lean computes for it, never against values written by hand. `libraries/theory/Oracle`, run by `npm run tabulate`, enumerates every argument of a definition up to a bound and writes each with the value the theory gives it as JSON. A test imports that JSON as `values` from `@egonitida/theory/Oracle`, decodes it with a schema, and expects the implementation to give the same value on the same argument. Such a test is written before the implementation, and fails until it exists. Tests written by hand cover only what lies around the theory, such as the interface to a host.
