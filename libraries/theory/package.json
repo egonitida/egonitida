@@ -4,10 +4,16 @@
   "private": true,
   "description": "Theory of EgoNitida, proved in Lean.",
   "type": "module",
+  "exports": {
+    "./Oracle": "./Oracle.ts"
+  },
   "scripts": {
     "build": "lake build Foundation Declaration generator oracle",
     "generate": "lake exe generator ../core/src documentation",
     "tabulate": "lake exe oracle",
     "check": "npm run build && npm run generate"
+  },
+  "dependencies": {
+    "effect": "4.1.2"
   }
 }

@@ -88,4 +88,10 @@ end Oracle
 
 /-- A function that writes the values of the theory as JSON. -/
 def main : IO Unit :=
-  IO.println (Lean.Json.mkObj []).compress
+  IO.println (Lean.Json.mkObj [
+    ("iteratedTransitionFunction", Oracle.casesJson
+      (EgoNitida.Machine.iteratedTransitionFunction :
+        Oracle.SmallMachine → Fin 2 → List (Fin 2) → Fin 2)),
+    ("behavior", Oracle.casesJson
+      (EgoNitida.Machine.behavior : Oracle.SmallMachine → Fin 2 → List (Fin 2) → Fin 2 → Fin 2))
+  ]).compress
