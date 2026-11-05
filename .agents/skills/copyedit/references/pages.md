@@ -1,0 +1,38 @@
+# Documentation
+
+## Structure
+
+| ID      | Rule                                                                                                                                        | Fits                                                                                                                  | Misses                                                                                                                                               |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P-STR-1 | Every page and every section opens under the heading with a short introduction that names what the rest of the page or the section unfolds. | Beneath every application built on the engine, machines run, each transitioning from its current state upon an input. | a page or a section with no introduction; …machines, each a Mealy machine, a tuple (S, S₀, Σ, Λ, T, G) whose transition function… as an introduction |
+| P-STR-2 | Every heading is an uncountable noun that names the idea its section sets out.                                                              | Input; Transition; Determinism; Installation in a how-to guide                                                        | Inputs; A Transition; Deterministic Steps; Install the package                                                                                       |
+| P-STR-3 | Every procedure of a tutorial or a how-to guide is a numbered list of steps, each step an item of the list.                                 | 1. Install the package. 2. Run the tests.                                                                             | a heading for each step; steps written as one paragraph                                                                                              |
+
+## Prose
+
+| ID      | Rule                                                                                                                          | Fits                                                | Misses                                            |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
+| P-PRO-1 | Every paragraph of a page opens with a word that opens no other paragraph of the page, the introduction of the page included. | Beneath every application… / Inside every machine…  | Beneath every application… / Beneath every state… |
+| P-PRO-2 | Every paragraph of a page opens with a word other than an article.                                                            | Nothing from the past survives among the relations… | The state keeps nothing from the past unless…     |
+
+## Illustration
+
+| ID      | Rule                                                                                                                                         | Fits                                                                                                                                                            | Misses                                                                                                                 |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| P-ILL-1 | Every figure stands after the figures it builds on.                                                                                          | the figure of a relation, then the figure of a state made of relations                                                                                          | the figure of a state made of relations before the figure of a relation                                                |
+| P-ILL-2 | Every figure links to every work it rests on, with the author and the year of each work, and every work stands after the works it builds on. | ↗ Mealy, 1955; ↗ Mealy, 1955 ↗ Jacobs, 2017                                                                                                                     | a figure with no link; ↗ source; ↗ Mealy, 1955 for a figure that rests on Jacobs as well; ↗ Jacobs, 2017 ↗ Mealy, 1955 |
+| P-ILL-3 | Every page says in words everything a figure on the page states.                                                                             | c : X → (X × B)^A, followed by: One function makes up every machine. Its structure map takes the current state and an input to a successor state and an output. | c : X → (X × B)^A, with no words after it                                                                              |
+| P-ILL-4 | Every image carries an alt text that says in words what the image shows, and every image that only decorates carries an empty alt text.      | `alt="A board of floors with floor 3 lit."`; `alt=""` for a divider                                                                                             | an image with no alt text; `alt="image"`; `alt="Splash.jpg"`                                                           |
+
+## Exemplification
+
+| ID      | Rule                                                                            | Fits                                                                     | Misses                                                         |
+| ------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------- |
+| P-EXA-1 | Every definition a page states has an example right after it.                   | the definition of a machine, then one transition of an elevator          | the definition of a machine with no example after it           |
+| P-EXA-2 | Every example comes from one world that every page of the documentation shares. | the board of floors in a lobby on one page, the elevator car on the next | a board of floors on one page and a billiard table on the next |
+
+## Linking
+
+| ID      | Rule                                                                                                            | Fits                                                          | Misses                                                                             |
+| ------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| P-LIN-1 | Every term a page takes in the meaning a field defines links to the definition of the term at every appearance. | successor state, linked to its definition at every appearance | successor state, linked at the first appearance alone; successor state, left plain |
