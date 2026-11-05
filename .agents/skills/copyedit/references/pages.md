@@ -10,10 +10,10 @@
 
 ## Prose
 
-| ID      | Rule                                                                                                                          | Fits                                                | Misses                                            |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
-| P-PRO-1 | Every paragraph of a page opens with a word that opens no other paragraph of the page, the introduction of the page included. | Beneath every application… / Inside every machine…  | Beneath every application… / Beneath every state… |
-| P-PRO-2 | Every paragraph of a page opens with a word other than an article.                                                            | Nothing from the past survives among the relations… | The state keeps nothing from the past unless…     |
+| ID      | Rule                                                                                                                                   | Fits                                                                                                                    | Misses                                                           |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| P-PRO-1 | Every paragraph of a section opens with a word that opens no other paragraph of the section, the introduction of the section included. | Beneath every application… / Inside every machine… in one section; EgoNitida… in one section and EgoNitida… in the next | Beneath every application… / Beneath every state… in one section |
+| P-PRO-2 | Every paragraph of a page opens with a word other than an article.                                                                     | Nothing from the past survives among the relations…                                                                     | The state keeps nothing from the past unless…                    |
 
 ## Illustration
 
