@@ -1,9 +1,5 @@
 <p align="center">
-  <img src=".github/assets/Splash.jpg" alt="EgoNitida, a real-time 3D engine for WebGPU, embroidered in gold thread on dark brown linen.">
-</p>
-
-<p align="center">
-  <img src=".github/assets/plate.svg" alt="A real-time 3D engine built on Effect, Three.js, and Foldkit. Build applications agents understand.">
+  <img src=".github/assets/Splash.jpg" alt="EgoNitida and the words &quot;A Lean-formalized 3D engine for WebGPU&quot; embroidered in gold thread on dark brown linen beside the diamond of the logo.">
 </p>
 
 <p align="center">
@@ -16,10 +12,12 @@
 
 ---
 
-EgoNitida is a real-time 3D engine for the web platform, built for any real-time 3D application: games, digital twins, virtual production, architectural visualization, and scientific and philosophical models alike. Its scope is bounded only by what the web platform provides. At its foundation lies a deterministic simulation, in which the state is a set of facts and a single step maps the current state and an input to the next. The laws it keeps are stated formally and proved in Lean, so a simulation can be replayed, inspected, and changed while it runs, its constants included, without losing correctness. Its long-term aim is simulation whose fidelity is limited by computation alone.
+EgoNitida is a Lean-formalized 3D engine for WebGPU. Games, previsualization, architectural visualization, digital twins, scientific simulations, and thought experiments all share one theory.
 
-Conceived as an agentic-first platform, it serves individuals and teams alike, while remaining fully accessible to those who prefer to work without an agent. It is built on emerging technologies most likely to become standards, and it keeps no backward compatibility, with neither its own past versions nor the technologies they replace.
+Beneath every application built on EgoNitida runs a deterministic simulation, in which the state is a set of facts and a single step maps the current state and an input to the next state. The laws of the simulation are stated and proved in Lean, so a running simulation can be replayed, inspected, and changed down to its constants and stays correct. The long-term aim of EgoNitida is simulation whose fidelity is limited by computation alone.
 
-## License
+Conceived as an agentic-first platform, EgoNitida serves individuals and teams alike and offers every operation without an agent as well. EgoNitida is built on emerging technologies most likely to become standards and drops compatibility with its past versions and with the technologies those standards replace.
 
-EgoNitida and all of its packages are licensed under [MIT](LICENSE).
+## Licensing
+
+EgoNitida is licensed under [the MIT License](LICENSE).
