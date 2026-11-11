@@ -10,9 +10,11 @@ export default defineConfig({
     '*': 'vp check --fix',
   },
   fmt: {
+    ignorePatterns: ['.claude/**'], // Skills formatted once, under `.agents`, which `.claude` links to.
     singleQuote: true,
   },
   lint: {
+    ignorePatterns: ['.claude/**'], // Skills checked once, under `.agents`, which `.claude` links to.
     extends: [recommended],
     jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
     categories: { correctness: 'error', suspicious: 'error', perf: 'error' },

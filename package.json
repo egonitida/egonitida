@@ -21,7 +21,7 @@
   ],
   "type": "module",
   "scripts": {
-    "prepare": "vp config && effect-tsgo patch --no-typescript --oxlint",
+    "prepare": "vp config && effect-tsgo patch --no-typescript --oxlint && npm install --prefix .agents/skills/audit-formalization/scripts",
     "check": "npm run check -w @egonitida/theory && vp check"
   },
   "devDependencies": {

@@ -18,7 +18,8 @@ dist/
 .lake/
 
 # Claude
-.claude/
+.claude/settings.local.json
+.claude/worktrees/
 
 # IDE
 .zed/

@@ -1,0 +1,16 @@
+{
+  "name": "reader",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reader writing the pages of a document as text and images.",
+  "type": "module",
+  "dependencies": {
+    "@effect/platform-node": "4.1.2",
+    "@napi-rs/canvas": "1.1.0",
+    "effect": "4.1.2",
+    "unpdf": "2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6"
+  }
+}
